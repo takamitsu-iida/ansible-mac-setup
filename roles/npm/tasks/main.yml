@@ -1,0 +1,52 @@
+---
+
+- name: nodebrewインストール用ディレクトリの存在チェック
+  stat:
+    path: "{{ NODEBREW_DIR }}"
+  register: nodebrew_dir
+
+- block:
+    - name: nodebrewインストール用ディレクトリ作成
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: 0755
+      with_items:
+        - "{{ NODEBREW_DIR }}"
+        - "{{ NODEBREW_SRC_DIR }}"
+  when:
+    - not nodebrew_dir.stat.exists
+
+- name: node.jsがインストール済みかどうかを確認
+  shell: which node
+  ignore_errors: True
+  changed_when: False
+  register: nodejs_installed
+
+- name: インストール済みのnode.jsのバージョンを確認
+  shell: nodebrew ls
+  ignore_errors: True
+  changed_when: False
+  when: nodejs_installed|success
+  register: nodejs_target_version_exist
+
+- name: node.jsをインストール
+  shell: nodebrew install-binary "{{ nodebrew_nodejs_version }}"
+  when: (nodejs_installed|failed) or (nodejs_target_version_exist|failed)
+
+- name: 使用するnode.jsのバージョンを指定
+  shell: nodebrew use "{{ nodebrew_nodejs_version }}"
+  when: (nodejs_installed|failed) or (nodejs_target_version_exist|failed)
+
+- name: npm update
+  shell: npm update -g npm
+  when: nodebrew_npm_update
+
+
+
+- name: Install npm packages global
+  npm:
+    name: "{{ item }}"
+    global: true
+  with_items:
+    - "{{ NPM_PACKAGES }}"

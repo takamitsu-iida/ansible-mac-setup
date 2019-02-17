@@ -80,3 +80,15 @@ iidamac2:/ iida$ mas search Xcode
 ```bash
 /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code --install-extension "{{ item }}"
 ```
+
+## npm
+
+nodebrewはhomebrewで導入する。
+
+現在の環境に何がインストールされているかは以下のコマンドで知ることができる。
+
+```bash
+npm ls -g --depth=0
+```
+
+ansibleのnpmモジュールを使えばいいだけ。

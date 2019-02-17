@@ -3,7 +3,7 @@
 EXTENSIONS:
 
   # YAML
-  - redhat.vscode-yaml
+  # - redhat.vscode-yaml
 
   # Markdown
   - DavidAnson.vscode-markdownlint

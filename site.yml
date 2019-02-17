@@ -28,7 +28,9 @@
            -t brew
            -t mas
            -t pyenv
+           ---------
            -t vscode
+           -t npm
 
 #
 # 実行
@@ -103,3 +105,9 @@
         name: vscode
       tags:
         - vscode
+
+    # npm
+    - import_role:
+        name: npm
+      tags:
+        - npm

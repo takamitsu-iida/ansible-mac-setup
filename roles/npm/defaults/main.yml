@@ -1,0 +1,9 @@
+---
+
+NODEBREW_DIR: "{{ ansible_user_dir + '/.nodebrew' }}"
+NODEBREW_SRC_DIR: "{{ ansible_user_dir + '/.nodebrew/src' }}"
+
+# npm ls -g --depth=0
+NPM_PACKAGES:
+  - '@vue/cli'
+  - http-server
