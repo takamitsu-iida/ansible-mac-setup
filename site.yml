@@ -18,7 +18,17 @@
 
     # 引数なしでの実行はエラーにする
     - fail:
-        msg: "タグの指定が必要です。"
+        msg: |
+          タグの指定が必要です。
+           -t osx
+           -t ssh
+           -t git
+           -t bash
+           -t proxy
+           -t brew
+           -t mas
+           -t pyenv
+           -t vscode
 
 #
 # 実行
