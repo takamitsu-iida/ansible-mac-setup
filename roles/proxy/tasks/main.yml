@@ -1,0 +1,16 @@
+---
+
+- block:
+
+    - name: Copy .proxyrc
+      copy:
+        dest: "{{ PROXYRC_FILE }}"
+        content: "{{ PROXY_SETTING }}"
+
+    - name: Set proxy config in ~/.bashrc
+      lineinfile:
+        path: "{{ BASHRC_FILE }}"
+        insertafter: '# --PROXY--'
+        line: '. ~/.proxyrc'
+
+  when: USE_PROXY

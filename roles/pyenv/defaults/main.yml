@@ -1,0 +1,30 @@
+---
+
+# pyenvディレクトリの位置
+# gitでクローンする先として指定する
+PYENV_DIR: "{{ ansible_user_dir + '/.pyenv' }}"
+
+# ~/.bashrcへのパス
+BASHRC_FILE: "{{ ansible_user_dir + '/.bashrc' }}"
+
+# インストールしたいPythonバージョン
+# site.ymlを実行する際にvars.ymlで上書きすること
+PYENV_VERSION: 3.6.5
+
+PIP_MODULES:
+  - ansible
+  - ansible-lint
+  - graphviz
+  - jinja2
+  - jsonpickle
+  - openpyxl
+  - pylint
+  - pyyaml
+  - prettytable
+  - requests
+  - tabulate
+  - textfsm
+  - tinydb
+  - tqdm
+  - xlrd
+  - yapf

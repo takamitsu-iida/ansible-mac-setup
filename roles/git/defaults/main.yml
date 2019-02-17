@@ -1,0 +1,19 @@
+---
+
+GIT_CONFIG_DIR: "{{ ansible_user_dir }}"
+GIT_CONFIG_FILE: "{{ ansible_user_dir + '/.gitconfig' }}"
+GIT_MESSAGE_FILE: "{{ ansible_user_dir + '/.gitmessage' }}"
+
+gitconfig: |
+  [user]
+    name = takamitsu-iida
+    email = takamitsu.iida@gmail.com
+  [core]
+    quotepath = false
+    autoCRLF = false
+
+  [commit]
+    template = ~/.gitmessage
+
+gitmessage: |
+  [ci skip]

@@ -1,0 +1,120 @@
+{
+    "editor.minimap.enabled": false,
+
+    // 1 つのタブに相当するスペースの数。`editor.detectIndentation` がオンの場合、この設定はファイル コンテンツに基づいて上書きされます。
+    "editor.tabSize": 2,
+
+    // 使用するプロキシ設定。設定されていない場合、環境変数 http_proxy および https_proxy から取得されます。
+    // "http.proxy": "http://username:passowrd@proxy-addr:8080",
+    "http.proxy": "",
+
+    // 提供された CA の一覧と照らしてプロキシ サーバーの証明書を確認するかどうか。
+    "http.proxyStrictSSL": false,
+
+    // エディターで空白文字を表示するかどうかを制御します
+    "editor.renderWhitespace": "boundary",
+
+    // エディターで制御文字を表示する必要があるかどうかを制御します
+    "editor.renderControlCharacters": true,
+
+    // ファイルを開くと、そのファイルの内容に基づいて `editor.tabSize` と `editor.insertSpaces` が検出されます。
+    "editor.detectIndentation": true,
+
+    // エディターで最後の行を越えてスクロールするかどうかを制御します
+    "editor.scrollBeyondLastLine": false,
+
+    // Controls whether the editor should render indent guides
+    "editor.renderIndentGuides": true,
+
+    // 有効にすると、ファイルの保存時に末尾の空白をトリミングします。
+    "files.trimTrailingWhitespace": true,
+
+    // マウス ホイール スクロール イベントの `deltaX` と `deltaY` で使用される乗数
+    "editor.mouseWheelScrollSensitivity": 2,
+
+    // 拡張機能 final-newline
+    "files.insertFinalNewline": true,
+
+    // JavaScript の検証を有効/無効にします
+    "javascript.validate.enable": true,
+    "eslint.enable": true,
+    "eslint.options": {
+        "rules": {
+            "linebreak-style": [
+                2,
+                "unix"
+            ],
+            "semi": [
+                2,
+                "always"
+            ],
+            "no-console": 0
+        },
+        "env": {
+            "es6": true,
+            "browser": true
+        },
+        "extends": "eslint:recommended"
+    },
+    "eslint.validate": [
+        "javascript",
+        {
+          "language": "vue",
+          "autoFix": true
+        }
+    ],
+
+    // css
+    "css.lint.unknownProperties": "ignore",
+
+    // python
+    "[python]": {
+        "editor.tabSize": 2
+    },
+    "python.pythonPath": "${env:PYENV_ROOT}/shims/python",
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintPath": "${env:PYENV_ROOT}/shims/pylint",
+    "python.linting.lintOnSave": true,
+    "python.formatting.provider": "yapf",
+    "python.formatting.yapfPath": "${env:PYENV_ROOT}/shims/yapf",
+    "python.formatting.yapfArgs": [
+        "--style={based_on_style: chromium, indent_width: 2, continuation_indent_width: 2, column_limit: 120}"
+    ],
+
+    // git
+    "git.enableSmartCommit": true,
+    "git.autofetch": true,
+
+    //
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.colorTheme": "Visual Studio Light",
+
+    //
+    "window.zoomLevel": 0,
+
+    // typescript
+    // "typescript.check.tscVersion": false
+
+    // markdownlint
+    "markdownlint.config": {
+        "default": true,
+        "no-hard-tabs": false,
+        "MD003": false,
+        "MD007": { "indent": 2 },
+        "MD013": false,
+        "MD024": false,
+        "MD025": false,
+        "MD033": false
+    },
+
+    // YAML
+    "[yaml]": {
+        "editor.tabSize": 2,
+        "editor.detectIndentation": true
+    },
+
+    // vue
+    "[vue]": {
+        "editor.tabSize": 2
+    },
+}

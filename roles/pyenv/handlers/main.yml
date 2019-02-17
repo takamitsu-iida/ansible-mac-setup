@@ -1,0 +1,4 @@
+---
+
+- name: source bashrc
+  shell: bash -lc "source ~/.bashrc"

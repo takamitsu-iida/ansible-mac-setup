@@ -1,0 +1,10 @@
+---
+
+ansible_connection: ssh
+
+ansible_user: "{{ vault_user | default('root') }}"
+ansible_port: 22
+ansible_password: "{{ vault_pass | default('password') }}"
+ansible_become: false
+ansible_become_method: sudo
+ansible_become_pass: "{{ vault_become_pass | default('password') }}"

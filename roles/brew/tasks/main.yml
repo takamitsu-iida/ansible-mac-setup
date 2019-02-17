@@ -1,0 +1,43 @@
+---
+
+- name: Check brew is installed
+  stat:
+    path: /usr/local/bin/brew
+  register: r
+
+-
+  block:
+
+    - name: Get brew installer
+      get_url: url=https://raw.githubusercontent.com/Homebrew/install/master/install dest=/tmp/brew_install
+
+    - name: Install homebrew
+      command: ruby /tmp/brew_install
+
+  when:
+    - not r.stat.exists
+
+
+- name: Update homebrew
+  homebrew:
+    update_homebrew: true
+
+- name: Update homebrew tap
+  homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ BREW_TAPS }}"
+
+- name: Install homebrew cask packages
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+    install_options: "appdir=/Applications"
+    accept_external_apps: true
+  with_items: "{{ BREW_CASK_APPS }}"
+
+- name: Install homebrew packages
+  homebrew:
+    name: "{{ BREW_PACKAGES }}"
+    state: present
+

@@ -1,0 +1,13 @@
+---
+
+- name: Create ~/.ssh directory if not exists
+  file:
+    dest: "{{ SSH_CONFIG_DIR }}"
+    state: directory
+    mode: 0700
+
+- name: Copy ~/.ssh/config
+  copy:
+    content: "{{ sshconfig }}"
+    dest: "{{ SSH_CONFIG_FILE }}"
+    mode: 0600

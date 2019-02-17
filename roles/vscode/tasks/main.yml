@@ -1,0 +1,12 @@
+---
+
+- name: Copy vscode settings.json
+  copy:
+    src: "{{ role_path }}/files/settings.json"
+    dest: "~/Library/Application Support/Code/User/"
+    mode: 0644
+
+- name: Install extensions
+  raw: /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code --install-extension "{{ item }}"
+  with_items:
+    - "{{ EXTENSIONS }}"

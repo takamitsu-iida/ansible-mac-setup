@@ -1,0 +1,56 @@
+---
+
+- name: Copy .bashrc
+  copy:
+    dest: "{{ BASHRC_FILE }}"
+    content: "{{ bashrc }}"
+
+- name: Copy .bash_profile
+  copy:
+    dest: "{{ BASH_PROFILE_FILE }}"
+    content: "{{ bash_profile }}"
+
+- name: Check if pyenv is installed
+  stat:
+    path: "{{ PYENV_DIR }}"
+  register: r
+  ignore_errors: true
+
+- block:
+
+    - name: Ensure pyenv setting in ~/.bashrc
+      blockinfile:
+        insertafter: '# --PYENV--'
+        path: "{{ BASHRC_FILE }}"
+        content: |
+          export PYENV_ROOT=$HOME/.pyenv
+          export PATH=$PYENV_ROOT/bin:$PATH
+          export PYTHON_CONFIGURE_OPTS="--enable-framework"
+          eval "$(pyenv init -)"
+
+    - name: Check if python is installed under pyenv
+      stat:
+        path: "{{ PYENV_DIR + '/versions/' + PYENV_VERSION }}"
+      register: version_check
+      ignore_errors: true
+
+    - name: Ensure pyenv version setting in ~/.bashrc
+      lineinfile:
+        insertafter: '# --PYENV_VERSION--'
+        path: "{{ BASHRC_FILE }}"
+        regexp: '^pyenv global'
+        line: "{{ 'pyenv global ' + PYENV_VERSION }}"
+      when:
+        - version_check.stat.exists
+
+    - name: Use system python
+      lineinfile:
+        insertafter: '# --PYENV_VERSION--'
+        path: "{{ BASHRC_FILE }}"
+        regexp: '^pyenv global'
+        line: pyenv global system
+      when:
+        - not version_check.stat.exists
+
+  when:
+    - r.stat.exists

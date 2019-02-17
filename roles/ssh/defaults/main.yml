@@ -1,0 +1,90 @@
+---
+
+SSH_CONFIG_DIR: "{{ ansible_user_dir + '/.ssh' }}"
+SSH_CONFIG_FILE: "{{ ansible_user_dir + '/.ssh/config' }}"
+
+sshconfig: |
+  Host pg04
+    User bastion
+
+  # pg04
+  # hostname pg04 is resolved by /etc/hosts
+  Host 10.35.158.20
+    User bastion
+
+  # Cisco2811
+  Host c2811
+    HostName 10.35.185.2
+    KexAlgorithms +diffie-hellman-group1-sha1
+    Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc
+    User cisco
+
+  # Catalyst3500g
+  Host c3560g
+    HostName 10.35.185.4
+    KexAlgorithms +diffie-hellman-group1-sha1
+    Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc
+    User cisco
+
+  # ansible master node
+  Host master
+    HostName 172.20.0.101
+    ProxyCommand ssh -W %h:%p 10.35.158.20
+    User ansible
+
+  # ansible control node
+  Host control
+    HostName 172.20.0.100
+    ProxyCommand ssh -W %h:%p 10.35.158.20
+    User ansible
+
+  # r1
+  # csr1000v on pg04
+  Host r1
+    HostName 172.20.0.21
+    ProxyCommand ssh -W %h:%p 10.35.158.20
+    User cisco
+
+  # r2
+  # csr1000v on pg04
+  Host r2
+    HostName 172.20.0.22
+    ProxyCommand ssh -W %h:%p 10.35.158.20
+    User cisco
+
+  # r3
+  # csr1000v on pg04
+  Host r3
+    HostName 172.20.0.23
+    ProxyCommand ssh -W %h:%p 10.35.158.20
+    User cisco
+
+  # r4
+  # csr1000v on pg04
+  Host r4
+    HostName 172.20.0.24
+    ProxyCommand ssh -W %h:%p 10.35.158.20
+    User cisco
+
+  # n9kv-no1
+  # Nexus9000v on pg04
+  Host n9kv-no1
+    HostName 172.20.0.31
+    ProxyCommand ssh -W %h:%p 10.35.158.20
+    User admin
+
+  # sr-s
+  Host srs1
+    HostName 192.168.1.200
+    ProxyCommand ssh -W %h:%p 10.35.158.20
+    KexAlgorithms +diffie-hellman-group1-sha1
+    Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc
+    User admin
+
+  # si-r
+  Host sir1
+    HostName 172.20.0.200
+    ProxyCommand ssh -W %h:%p 10.35.158.20
+    KexAlgorithms +diffie-hellman-group1-sha1
+    Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc
+    User admin

@@ -1,0 +1,8 @@
+---
+
+- name: install applications
+  shell: /usr/local/bin/mas install {{ item.id }}
+  with_items: "{{ packages }}"
+
+- name: upgrade applications
+  shell: /usr/local/bin/mas upgrade

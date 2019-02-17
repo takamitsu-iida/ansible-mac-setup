@@ -1,0 +1,7 @@
+#
+# development
+#
+
+[mac]
+mac1 ansible_host=10.35.158.100
+mac2 ansible_host=10.35.158.102

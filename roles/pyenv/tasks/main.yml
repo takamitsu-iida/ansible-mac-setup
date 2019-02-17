@@ -1,0 +1,70 @@
+---
+
+- name: Check if pyenv is installed
+  stat:
+    path: "{{ PYENV_DIR }}"
+  register: pyenv_directory
+
+- block:
+
+    - name: Install pyenv by git
+      git:
+        repo: git://github.com/pyenv/pyenv.git
+        dest: "{{ PYENV_DIR }}"
+        accept_hostkey: true
+
+    # この部分はbashロールからそのまま移植
+    # TODO: 重複しているのでなんとかしたい
+    - name: Ensure pyenv setting in ~/.bashrc
+      blockinfile:
+        insertafter: '# --PYENV--'
+        path: "{{ BASHRC_FILE }}"
+        content: |
+          export PYENV_ROOT=$HOME/.pyenv
+          export PATH=$PYENV_ROOT/bin:$PATH
+          export PYTHON_CONFIGURE_OPTS="--enable-framework"
+          eval "$(pyenv init -)"
+      notify: source bashrc
+
+  when:
+    - not pyenv_directory.stat.exists
+
+- name: Check if python "{{ PYENV_VERSION }} is installed"
+  stat:
+    path: "{{ PYENV_DIR + '/versions/' + PYENV_VERSION }}"
+  register: version_directory
+  ignore_errors: true
+
+- block:
+
+    # 2019/02/17時点
+    # macOS Mojave 10.14以降だとpyenvでPythonをインストールする際にエラーが出るのでその対策
+    # becomeがうまく機能しないので、手で実行しておく。もともと一度やればすむことなので。
+    # - name: Install macOS_SDK_headers_for_macOS_10.14.pkg
+    #   shell: installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
+    #   become: true
+
+    - name: Install python "{{ PYENV_VERSION }}"
+      shell: 'bash -lc "pyenv install {{ PYENV_VERSION }}"'
+
+    - name: Switch python version to "{{ PYENV_VERSION }}"
+      shell: 'bash -lc "pyenv global {{ PYENV_VERSION }}"'
+
+    # この部分もbashロールからの移植
+    - name: Ensure pyenv version setting in ~/.bashrc
+      lineinfile:
+        insertafter: '# --PYENV_VERSION--'
+        path: "{{ BASHRC_FILE }}"
+        regexp: '^pyenv global'
+        line: "{{ 'pyenv global ' + PYENV_VERSION }}"
+
+  when:
+    - not version_directory.stat.exists
+
+- set_fact:
+    ansible_python_interpreter: "{{ PYENV_DIR + '/shims/python' }}"
+
+- name: Install python modules
+  pip:
+    name: "{{ PIP_MODULES }}"
+  ignore_errors: true

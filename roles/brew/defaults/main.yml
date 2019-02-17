@@ -1,0 +1,34 @@
+---
+
+BREW_TAPS:
+  - homebrew/core
+  - caskroom/cask
+
+BREW_CASK_APPS:
+  # - docker
+  - google-chrome
+  - google-japanese-ime
+  - ip-in-menu-bar
+  # - virtualbox
+  # - vagrant
+  - visual-studio-code
+
+BREW_PACKAGES:
+  - autoconf
+  - bash-completion
+  - cdrtools
+  # - docker-compose
+  # - docker-machine
+  - git
+  - jq
+  - mas  # mas-cli
+  - nodebrew
+  - telnet
+  - tnftp
+  - tree
+  - openssl
+  # sshpass
+  - http://git.io/sshpass.rb
+  - readline
+  - tree
+  - wget

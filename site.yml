@@ -1,0 +1,95 @@
+---
+
+#
+# 実行前チェック
+#
+- name: Validate ansible environment
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files: vars.yml
+  tasks:
+
+    - name: FAIL SCRIPT IF REQUIRED TARGET_HOSTS PARAMETER IS MISSING
+      fail:
+        msg: "You have to add the 'TARGET_HOSTS:' in vars.yml"
+      when:
+        - (TARGET_HOSTS is not defined) or (TARGET_HOSTS == '')
+
+    # 引数なしでの実行はエラーにする
+    - fail:
+        msg: "タグの指定が必要です。"
+
+#
+# 実行
+#
+- name: Setup macOS
+  hosts: "{{ TARGET_HOSTS }}"
+  # factsを収集しないと使えない変数がある
+  gather_facts: true
+  vars_files: vars.yml
+  tasks:
+
+    # osx defaults
+    - import_role:
+        name: osx_defaults
+      tags:
+        - osx
+        - full
+
+    # ~/.ssh/config
+    - import_role:
+        name: ssh
+      tags:
+        - ssh
+        - full
+
+    # ~/.gitconfig
+    - import_role:
+        name: git
+      tags:
+        - git
+        - full
+
+    # ~/.bashrc ~/.bash_profile
+    - import_role:
+        name: bash
+      tags:
+        - bash
+        - full
+
+    # ~/.proxyrc
+    - import_role:
+        name: proxy
+      when:
+        - USE_PROXY
+      tags:
+        - proxy
+        - full
+
+    # brew
+    - import_role:
+        name: brew
+      tags:
+        - brew
+        - full
+
+    # mas
+    - import_role:
+        name: mas
+      tags:
+        - mas
+        - full
+
+    # pyenv
+    - import_role:
+        name: pyenv
+      tags:
+        - pyenv
+        - full
+
+    # vscode
+    - import_role:
+        name: vscode
+      tags:
+        - vscode

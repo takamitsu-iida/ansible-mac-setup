@@ -1,0 +1,10 @@
+---
+
+#
+# mas-cliをインストールした後、
+# mas search Xcode
+# で調べる
+#
+packages:
+  - name: Xcode (10.1)
+    id: 497799835

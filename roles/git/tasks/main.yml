@@ -1,0 +1,11 @@
+---
+
+- name: Copy .gitconfig
+  copy:
+    content: "{{ gitconfig }}"
+    dest: "{{ GIT_CONFIG_FILE }}"
+
+- name: Copy .gitmessage
+  copy:
+    content: "{{ gitmessage }}"
+    dest: "{{ GIT_MESSAGE_FILE }}"

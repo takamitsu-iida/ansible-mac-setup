@@ -1,0 +1,61 @@
+---
+
+# site.ymlを実行する際にvars.ymlで上書きすること
+USE_PROXY: false
+
+BASHRC_FILE: "{{ ansible_user_dir + '/.bashrc' }}"
+
+BASH_PROFILE_FILE: "{{ ansible_user_dir + '/.bash_profile' }}"
+
+PYENV_DIR: "{{ ansible_user_dir + '/.pyenv' }}"
+
+# site.ymlを実行する際にvars.ymlで上書きすること
+PYENV_VERSION: system
+
+bashrc: |
+  # alias
+  alias ls='ls -F'
+
+  # $HOME/binを最後に通す
+  export PATH=$PATH:$HOME/bin
+
+  # nodebrew
+  export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+  # ansible
+  # export ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q bastion@10.35.158.20"'
+
+  # proxy
+  # . ~/.proxyrc
+  # --PROXY--
+
+  # # pyenv
+  # export PYENV_ROOT=$HOME/.pyenv
+  # export PATH=$PYENV_ROOT/bin:$PATH
+  # export PYTHON_CONFIGURE_OPTS="--enable-framework"
+  # eval "$(pyenv init -)"
+
+  # pyenv versionsでインストールされているバージョンを確認して指定する
+  # pyenv global system
+  # pyenv global 3.6.4
+
+  # --PYENV--
+
+  # --PYENV_VERSION--
+
+
+pyenvrc: |
+  export PYENV_ROOT=$HOME/.pyenv
+  export PATH=$PYENV_ROOT/bin:$PATH
+  export PYTHON_CONFIGURE_OPTS="--enable-framework"
+  eval "$(pyenv init -)"
+
+
+bash_profile: |
+  # bash_completion
+  [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+
+  # load .bashrc
+  if [ -f ~/.bashrc ]; then
+      . ~/.bashrc
+  fi
