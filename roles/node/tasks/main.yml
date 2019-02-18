@@ -1,0 +1,54 @@
+---
+
+- assert:
+    that:
+      - NODEBREW_DIR is defined
+      - NODEBREW_SRC_DIR is defined
+      - NODEBREW_NODE_VERSION is defined
+      - NPM_PACKAGES is defined
+    msg: required variables are not defined.
+
+
+- name: Create .nodebrew dir if not exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "{{ NODEBREW_DIR }}"
+    - "{{ NODEBREW_SRC_DIR }}"
+
+- name: Check if nodejs is installed
+  shell: which node
+  ignore_errors: True
+  changed_when: False
+  register: nodejs_installed_check
+
+
+- name: Check installed nodejs version
+  shell: nodebrew ls | grep "{{ NODEBREW_NODE_VERSION }}"
+  ignore_errors: true
+  changed_when: false
+  when: nodejs_installed_check is success
+  register: nodejs_version_check
+
+- name: Install nodejs "{{ NODEBREW_NODE_VERSION }}"
+  shell: nodebrew install-binary "{{ NODEBREW_NODE_VERSION }}"
+  when:
+    - (nodejs_installed_check is failed) or (nodejs_version_check is failed)
+
+- name: Set current nodejs version
+  shell: nodebrew use "{{ NODEBREW_NODE_VERSION }}"
+  when:
+    - (nodejs_installed_check|failed) or (nodejs_version_check|failed)
+
+- name: Update npm
+  shell: npm update -g npm
+  when: NODEBREW_NPM_UPDATE
+
+- name: Install npm packages
+  npm:
+    name: "{{ item }}"
+    global: true
+  with_items:
+    - "{{ NPM_PACKAGES }}"

@@ -30,12 +30,12 @@
            -t git
            -t bash
            -t proxy
-           -t brew
            -t pyenv
+           -t brew
            ---------
-           -t mas
-           -t vscode
            -t npm
+           -t vscode
+           -t mas
 
 #
 # 実行
@@ -112,8 +112,8 @@
       tags:
         - vscode
 
-    # npm
+    # node
     - import_role:
-        name: npm
+        name: node
       tags:
-        - npm
+        - node

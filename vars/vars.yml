@@ -1,6 +1,7 @@
 ---
 
-TARGET_HOSTS: mac
+# TARGET_HOSTS: mac
+TARGET_HOSTS: localhost
 
 # ~/.bash_profileへのフルパス
 BASH_PROFILE_FILE: "{{ ansible_user_dir + '/.bash_profile' }}"
@@ -148,6 +149,28 @@ GITMESSAGE: |
 MAS_PACKAGES:
   - name: Xcode (10.1)
     id: 497799835
+
+
+#
+# node
+#
+
+# ~/.nodebrew
+NODEBREW_DIR: "{{ ansible_user_dir + '/.nodebrew' }}"
+
+# ~/.nodebrew/src
+NODEBREW_SRC_DIR: "{{ ansible_user_dir + '/.nodebrew/src' }}"
+
+NODEBREW_NODE_VERSION: v8.15.0
+
+# npm自身のアップデートをするか
+# npm update -g npm
+NODEBREW_NPM_UPDATE: true
+
+# npm ls -g --depth=0
+NPM_PACKAGES:
+  - '@vue/cli'
+  - http-server
 
 
 #
