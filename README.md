@@ -13,9 +13,10 @@
 ## Xcodeの使用許諾
 
 Xcodeは最初から入ってるのかな？
-一度起動して、使用許諾に同意しないといけない。
 
-## ヘッダファイルのインストール
+一度起動して、使用許諾に同意しておかないといけない。
+
+## Xcodeのヘッダファイルのインストール
 
 Xcode10からは標準の場所にしかヘッダファイルを置いてくれないので、手動でヘッダファイルをインストールする。
 これは一度だけやればよいので、先に済ませておく。
@@ -81,7 +82,7 @@ iidamac2:/ iida$ mas search Xcode
 /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code --install-extension "{{ item }}"
 ```
 
-## npm
+## nodebrew
 
 nodebrewはhomebrewで導入する。
 
@@ -91,4 +92,4 @@ nodebrewはhomebrewで導入する。
 npm ls -g --depth=0
 ```
 
-ansibleのnpmモジュールを使えばいいだけ。
+ansibleにnpmモジュールがあるのでそれを使えばいいだけ。

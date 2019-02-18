@@ -283,33 +283,23 @@ VSCODE_SETTINGS_PATH: /Users/iida/Library/Application Support/Code/User/settings
 VSCODE_SETTINGS_DEST: "{{ ansible_user_dir + '/Library/Application Support/Code/User/' }}"
 
 VSCODE_EXTENSIONS:
-
-  # YAML
-  # - redhat.vscode-yaml
-
   # Markdown
   - DavidAnson.vscode-markdownlint
-
   # JavaScript
   - dbaeumer.vscode-eslint
   - octref.vetur
-
   # Python
   - ms-python.python
   - njpwerner.autodocstring
-
   # Ansible
   - vscoss.vscode-ansible
   - wholroyd.jinja
-
   # git
   - donjayamanne.githistory
   - eamodio.gitlens
   - esbenp.prettier-vscode
-
   # excel
   - GrapeCity.gc-excelviewer
-
   # vscode固有
   - satokaz.vscode-bs-ctrlchar-remover
   - MS-CEINTL.vscode-language-pack-ja
