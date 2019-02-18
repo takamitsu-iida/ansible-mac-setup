@@ -22,8 +22,6 @@
         dest: "{{ PYENV_DIR }}"
         accept_hostkey: true
 
-    # この部分はbashロールからそのまま移植
-    # TODO: 重複しているのでなんとかしたい
     - name: Ensure pyenv setting in ~/.bashrc
       blockinfile:
         insertafter: '# --PYENV--'
@@ -55,13 +53,13 @@
     - name: Switch python version to "{{ PYENV_VERSION }}"
       shell: 'bash -lc "pyenv global {{ PYENV_VERSION }}"'
 
-    # この部分もbashロールからの移植
     - name: Ensure pyenv version setting in ~/.bashrc
       lineinfile:
         insertafter: '# --PYENV_VERSION--'
         path: "{{ BASHRC_FILE }}"
         regexp: '^pyenv global'
         line: "{{ 'pyenv global ' + PYENV_VERSION }}"
+      notify: source bashrc
 
   when:
     - not version_directory.stat.exists

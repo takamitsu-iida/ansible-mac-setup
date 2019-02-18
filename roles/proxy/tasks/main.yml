@@ -8,17 +8,14 @@
     msg: required variables are not defined.
 
 
-- block:
+- name: Copy .proxyrc
+  copy:
+    dest: "{{ PROXYRC_FILE }}"
+    content: "{{ PROXYRC }}"
 
-    - name: Copy .proxyrc
-      copy:
-        dest: "{{ PROXYRC_FILE }}"
-        content: "{{ PROXYRC }}"
-
-    - name: Set proxy config in ~/.bashrc
-      lineinfile:
-        path: "{{ BASHRC_FILE }}"
-        insertafter: '# --PROXY--'
-        line: '. ~/.proxyrc'
-
+- name: Set proxy config in ~/.bashrc
+  lineinfile:
+    path: "{{ BASHRC_FILE }}"
+    insertafter: '# --PROXY--'
+    line: '. ~/.proxyrc'
   when: USE_PROXY

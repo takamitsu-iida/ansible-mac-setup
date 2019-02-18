@@ -1,7 +1,7 @@
 ---
 
-# TARGET_HOSTS: mac
-TARGET_HOSTS: localhost
+TARGET_HOSTS: mac
+# TARGET_HOSTS: localhost
 
 # ~/.bash_profileへのフルパス
 BASH_PROFILE_FILE: "{{ ansible_user_dir + '/.bash_profile' }}"
