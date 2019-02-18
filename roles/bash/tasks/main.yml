@@ -1,14 +1,25 @@
 ---
 
+- assert:
+    that:
+      - BASHRC is defined
+      - BASHRC_FILE is defined
+      - BASH_PROFILE is defined
+      - BASH_PROFILE_FILE is defined
+      - PYENVRC is defined
+      - PYENV_DIR is defined
+      - PYENV_VERSION is defined
+    msg: required variables are not defined.
+
 - name: Copy .bashrc
   copy:
     dest: "{{ BASHRC_FILE }}"
-    content: "{{ bashrc }}"
+    content: "{{ BASHRC }}"
 
 - name: Copy .bash_profile
   copy:
     dest: "{{ BASH_PROFILE_FILE }}"
-    content: "{{ bash_profile }}"
+    content: "{{ BASH_PROFILE }}"
 
 - name: Check if pyenv is installed
   stat:
@@ -22,11 +33,7 @@
       blockinfile:
         insertafter: '# --PYENV--'
         path: "{{ BASHRC_FILE }}"
-        content: |
-          export PYENV_ROOT=$HOME/.pyenv
-          export PATH=$PYENV_ROOT/bin:$PATH
-          export PYTHON_CONFIGURE_OPTS="--enable-framework"
-          eval "$(pyenv init -)"
+        content: "{{ PYENVRC }}"
 
     - name: Check if python is installed under pyenv
       stat:

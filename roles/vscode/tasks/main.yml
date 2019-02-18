@@ -1,12 +1,18 @@
 ---
 
+- assert:
+    that:
+      - VSCODE_EXTENSIONS is defined
+    msg: required variables are not defined.
+
 - name: Copy vscode settings.json
   copy:
-    src: "{{ role_path }}/files/settings.json"
+    # src: "{{ role_path }}/files/settings.json"
+    src: /Users/iida/Library/Application Support/Code/User/settings.json
     dest: "~/Library/Application Support/Code/User/"
     mode: 0644
 
 - name: Install extensions
   raw: /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code --install-extension "{{ item }}"
   with_items:
-    - "{{ EXTENSIONS }}"
+    - "{{ VSCODE_EXTENSIONS }}"

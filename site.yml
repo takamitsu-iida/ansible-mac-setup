@@ -7,8 +7,13 @@
   hosts: localhost
   connection: local
   gather_facts: false
-  vars_files: vars.yml
+  vars_files:
+    - vars/vars.yml
+    - vars/vault.yml
   tasks:
+
+    - debug:
+        msg: "{{ PROXYRC }}"
 
     - name: FAIL SCRIPT IF REQUIRED TARGET_HOSTS PARAMETER IS MISSING
       fail:
@@ -26,9 +31,9 @@
            -t bash
            -t proxy
            -t brew
-           -t mas
            -t pyenv
            ---------
+           -t mas
            -t vscode
            -t npm
 
@@ -39,7 +44,9 @@
   hosts: "{{ TARGET_HOSTS }}"
   # factsを収集しないと使えない変数がある
   gather_facts: true
-  vars_files: vars.yml
+  vars_files:
+    - vars/vars.yml
+    - vars/vault.yml
   tasks:
 
     # osx defaults
@@ -86,19 +93,18 @@
         - brew
         - full
 
-    # mas
-    - import_role:
-        name: mas
-      tags:
-        - mas
-        - full
-
     # pyenv
     - import_role:
         name: pyenv
       tags:
         - pyenv
         - full
+
+    # mas
+    - import_role:
+        name: mas
+      tags:
+        - mas
 
     # vscode
     - import_role:

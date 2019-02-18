@@ -1,8 +1,14 @@
 ---
 
-- name: install applications
-  shell: /usr/local/bin/mas install {{ item.id }}
-  with_items: "{{ packages }}"
+- assert:
+    that:
+      - MAS_PACKAGES is defined
+    msg: required variables are not defined.
 
-- name: upgrade applications
+
+- name: Install apple store applications
+  shell: /usr/local/bin/mas install {{ item.id }}
+  with_items: "{{ MAS_PACKAGES }}"
+
+- name: Upgrade applications
   shell: /usr/local/bin/mas upgrade

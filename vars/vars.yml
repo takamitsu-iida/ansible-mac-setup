@@ -1,0 +1,289 @@
+---
+
+TARGET_HOSTS: mac
+
+# ~/.bash_profileへのフルパス
+BASH_PROFILE_FILE: "{{ ansible_user_dir + '/.bash_profile' }}"
+
+# ~/.bash_profileへのフルパス
+BASH_PROFILE: |
+  # bash_completion
+  [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+
+  # load .bashrc
+  if [ -f ~/.bashrc ]; then
+      . ~/.bashrc
+  fi
+
+# ~/.bashrcへのフルパス
+BASHRC_FILE: "{{ ansible_user_dir + '/.bashrc' }}"
+
+# ~/.bashrcのテンプレート
+BASHRC: |
+  # alias
+  alias ls='ls -F'
+
+  # $HOME/binを最後に通す
+  export PATH=$PATH:$HOME/bin
+
+  # nodebrew
+  export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+  # ansible
+  # export ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q bastion@10.35.158.20"'
+
+  # proxy
+  # . ~/.proxyrc
+
+  # --PROXY--
+
+  # # pyenv
+  # export PYENV_ROOT=$HOME/.pyenv
+  # export PATH=$PYENV_ROOT/bin:$PATH
+  # export PYTHON_CONFIGURE_OPTS="--enable-framework"
+  # eval "$(pyenv init -)"
+
+  # pyenv versionsでインストールされているバージョンを確認して指定する
+  # pyenv global system
+  # pyenv global 3.6.4
+
+  # --PYENV--
+
+  # --PYENV_VERSION--
+
+
+#
+# roles/proxy
+#
+
+# プロキシを使うかどうか
+USE_PROXY: false
+
+PROXYRC_FILE: "{{ ansible_user_dir + '/.proxyrc' }}"
+
+# ~/.proxyrcのテンプレート
+# 中身を確認するには./vars/vault.ymlを解凍すること
+PROXYRC: "{{ VAULT_PROXYRC }}"
+
+
+#
+# roles/pyenv
+#
+
+# pyenvで使用するバージョン
+PYENV_VERSION: 3.6.5
+
+# pyenvディレクトリの位置
+# gitでクローンする先として指定する
+PYENV_DIR: "{{ ansible_user_dir + '/.pyenv' }}"
+
+PYENVRC: |
+  export PYENV_ROOT=$HOME/.pyenv
+  export PATH=$PYENV_ROOT/bin:$PATH
+  export PYTHON_CONFIGURE_OPTS="--enable-framework"
+  eval "$(pyenv init -)"
+
+PIP_MODULES:
+  - ansible
+  - ansible-lint
+  - graphviz
+  - jinja2
+  - jsonpickle
+  - openpyxl
+  - pylint
+  - pyyaml
+  - prettytable
+  - requests
+  - tabulate
+  - textfsm
+  - tinydb
+  - tqdm
+  - xlrd
+  - yapf
+
+
+#
+# roles/ssh
+#
+
+# ~/.ssh
+SSH_CONFIG_DIR: "{{ ansible_user_dir + '/.ssh' }}"
+
+# ~/.ssh/config
+SSH_CONFIG_FILE: "{{ ansible_user_dir + '/.ssh/config' }}"
+
+# ~/.ssh/configの中身
+# vault.ymlを解凍して確認すること
+SSH_CONFIG: "{{ VAULT_SSHCONFIG }}"
+
+#
+# roles/git
+#
+
+GIT_CONFIG_FILE: "{{ ansible_user_dir + '/.gitconfig' }}"
+GIT_MESSAGE_FILE: "{{ ansible_user_dir + '/.gitmessage' }}"
+
+GITCONFIG: |
+  [user]
+    name = takamitsu-iida
+    email = takamitsu.iida@gmail.com
+  [core]
+    quotepath = false
+    autoCRLF = false
+
+  [commit]
+    template = ~/.gitmessage
+
+GITMESSAGE: |
+  [ci skip]
+
+
+#
+# roles/mas
+#
+#
+
+# mas-cliをインストールした後、
+# mas search Xcodeでidを調べる
+MAS_PACKAGES:
+  - name: Xcode (10.1)
+    id: 497799835
+
+
+#
+# roles/osx_defaults
+#
+
+OSX_DEFAULTS_LIST:
+  # dock
+  - domain: com.apple.dock
+    key: autohide
+    type: bool
+    value: false
+
+  - domain: com.apple.dock
+    key: magnification
+    type: bool
+    value: false
+
+  - domain: com.apple.dock
+    key: orientation
+    type: string
+    value: "left"
+
+  - domain: com.apple.dock
+    key: tilesize
+    type: int
+    value: 83
+
+  # finder
+  - domain: com.apple.finder
+    key: AppleShowAllFiles
+    type: string
+    value: true
+
+  # menu
+  - domain: com.apple.menuextra.battery
+    key: ShowPercent
+    type: string
+    value: YES
+
+  # キーリピート
+  - domain: NSGlobalDomain
+    key: InitialKeyRepeat
+    type: int
+    value: 35
+
+  # キーリピート
+  - domain: NSGlobalDomain
+    key: KeyRepeat
+    type: int
+    value: 2
+
+  # トラックパッド
+  - domain: NSGlobalDomain
+    key: com.apple.trackpad.scaling
+    type: float
+    value: 1.5
+
+  # すべての拡張子を表示
+  - domain: NSGlobalDomain
+    key: AppleShowAllExtensions
+    type: bool
+    value: true
+
+
+#
+# roles/brew
+#
+
+BREW_TAPS:
+  - homebrew/core
+  - caskroom/cask
+
+BREW_CASK_APPS:
+  # - docker
+  - google-chrome
+  - google-japanese-ime
+  - ip-in-menu-bar
+  # - virtualbox
+  # - vagrant
+  - visual-studio-code
+
+BREW_PACKAGES:
+  - autoconf
+  - bash-completion
+  - cdrtools
+  # - docker-compose
+  # - docker-machine
+  - git
+  - jq
+  - mas  # mas-cli
+  - nodebrew
+  - telnet
+  - tnftp
+  - tree
+  - openssl
+  # sshpass
+  - http://git.io/sshpass.rb
+  - readline
+  - tree
+  - wget
+
+
+#
+# roles/vscode
+#
+
+VSCODE_EXTENSIONS:
+
+  # YAML
+  # - redhat.vscode-yaml
+
+  # Markdown
+  - DavidAnson.vscode-markdownlint
+
+  # JavaScript
+  - dbaeumer.vscode-eslint
+  - octref.vetur
+
+  # Python
+  - ms-python.python
+  - njpwerner.autodocstring
+
+  # Ansible
+  - vscoss.vscode-ansible
+  - wholroyd.jinja
+
+  # git
+  - donjayamanne.githistory
+  - eamodio.gitlens
+  - esbenp.prettier-vscode
+
+  # excel
+  - GrapeCity.gc-excelviewer
+
+  # vscode固有
+  - satokaz.vscode-bs-ctrlchar-remover
+  - MS-CEINTL.vscode-language-pack-ja
+  - samverschueren.final-newline

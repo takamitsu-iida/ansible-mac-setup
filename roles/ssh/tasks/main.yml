@@ -1,5 +1,12 @@
 ---
 
+- assert:
+    that:
+      - SSH_CONFIG is defined
+      - SSH_CONFIG_DIR is defined
+      - SSH_CONFIG_FILE is defined
+    msg: required variables are not defined.
+
 - name: Create ~/.ssh directory if not exists
   file:
     dest: "{{ SSH_CONFIG_DIR }}"
@@ -8,6 +15,6 @@
 
 - name: Copy ~/.ssh/config
   copy:
-    content: "{{ sshconfig }}"
+    content: "{{ SSH_CONFIG }}"
     dest: "{{ SSH_CONFIG_FILE }}"
     mode: 0600

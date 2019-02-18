@@ -1,23 +1,15 @@
 ---
 
-- name: nodebrewインストール用ディレクトリの存在チェック
-  stat:
-    path: "{{ NODEBREW_DIR }}"
-  register: nodebrew_dir
+- name: Create .nodebrew dir if not exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "{{ NODEBREW_DIR }}"
+    - "{{ NODEBREW_SRC_DIR }}"
 
-- block:
-    - name: nodebrewインストール用ディレクトリ作成
-      file:
-        path: "{{ item }}"
-        state: directory
-        mode: 0755
-      with_items:
-        - "{{ NODEBREW_DIR }}"
-        - "{{ NODEBREW_SRC_DIR }}"
-  when:
-    - not nodebrew_dir.stat.exists
-
-- name: node.jsがインストール済みかどうかを確認
+- name: Check if Node.js is installed
   shell: which node
   ignore_errors: True
   changed_when: False
@@ -27,7 +19,7 @@
   shell: nodebrew ls
   ignore_errors: True
   changed_when: False
-  when: nodejs_installed|success
+  when: nodejs_installed is success
   register: nodejs_target_version_exist
 
 - name: node.jsをインストール

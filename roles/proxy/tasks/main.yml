@@ -1,11 +1,19 @@
 ---
 
+- assert:
+    that:
+      - PROXYRC is defined
+      - PROXYRC_FILE is defined
+      - PROXYRC_FILE is defined
+    msg: required variables are not defined.
+
+
 - block:
 
     - name: Copy .proxyrc
       copy:
         dest: "{{ PROXYRC_FILE }}"
-        content: "{{ PROXY_SETTING }}"
+        content: "{{ PROXYRC }}"
 
     - name: Set proxy config in ~/.bashrc
       lineinfile:

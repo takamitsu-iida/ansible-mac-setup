@@ -1,5 +1,13 @@
 ---
 
+- assert:
+    that:
+      - BREW_TAPS is defined
+      - BREW_CASK_APPS is defined
+      - BREW_PACKAGES is defined
+    msg: required variables are not defined.
+
+
 - name: Check brew is installed
   stat:
     path: /usr/local/bin/brew

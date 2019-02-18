@@ -1,5 +1,14 @@
 ---
 
+- assert:
+    that:
+      - BASHRC_FILE is defined
+      - PYENVRC is defined
+      - PYENV_DIR is defined
+      - PYENV_VERSION is defined
+      - PIP_MODULES is defined
+    msg: required variables are not defined.
+
 - name: Check if pyenv is installed
   stat:
     path: "{{ PYENV_DIR }}"
@@ -19,11 +28,7 @@
       blockinfile:
         insertafter: '# --PYENV--'
         path: "{{ BASHRC_FILE }}"
-        content: |
-          export PYENV_ROOT=$HOME/.pyenv
-          export PATH=$PYENV_ROOT/bin:$PATH
-          export PYTHON_CONFIGURE_OPTS="--enable-framework"
-          eval "$(pyenv init -)"
+        content: "{{ PYENVRC }}"
       notify: source bashrc
 
   when:

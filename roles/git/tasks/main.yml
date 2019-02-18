@@ -1,11 +1,19 @@
 ---
 
+- assert:
+    that:
+      - GITCONFIG is defined
+      - GIT_CONFIG_FILE is defined
+      - GITMESSAGE is defined
+      - GIT_MESSAGE_FILE is defined
+    msg: required variables are not defined.
+
 - name: Copy .gitconfig
   copy:
-    content: "{{ gitconfig }}"
+    content: "{{ GITCONFIG }}"
     dest: "{{ GIT_CONFIG_FILE }}"
 
 - name: Copy .gitmessage
   copy:
-    content: "{{ gitmessage }}"
+    content: "{{ GITMESSAGE }}"
     dest: "{{ GIT_MESSAGE_FILE }}"

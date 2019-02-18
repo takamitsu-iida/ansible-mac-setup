@@ -1,5 +1,11 @@
 ---
 
+- assert:
+    that:
+      - OSX_DEFAULTS_LIST is defined
+    msg: required variables are not defined.
+
+
 - name: Write maxOS defaults settings
   osx_defaults:
     domain: "{{ item.domain }}"
@@ -8,4 +14,4 @@
     value: "{{ item.value }}"
     state: present
   with_items:
-    - "{{ osx_defaults_list }}"
+    - "{{ OSX_DEFAULTS_LIST }}"
