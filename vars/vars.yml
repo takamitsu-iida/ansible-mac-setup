@@ -249,16 +249,14 @@ BREW_CASK_APPS:
   - google-chrome
   - google-japanese-ime
   - ip-in-menu-bar
+  - visual-studio-code
   # - virtualbox
   # - vagrant
-  - visual-studio-code
 
 BREW_PACKAGES:
   - autoconf
   - bash-completion
   - cdrtools
-  # - docker-compose
-  # - docker-machine
   - git
   - jq
   - mas  # mas-cli
@@ -267,8 +265,8 @@ BREW_PACKAGES:
   - tnftp
   - tree
   - openssl
-  # sshpass
-  - http://git.io/sshpass.rb
+  # sshpassは直接導入できないのでインストールスクリプトを指定する
+  - https://git.io/sshpass.rb
   - readline
   - tree
   - wget
