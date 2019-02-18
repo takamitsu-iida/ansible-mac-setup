@@ -25,15 +25,17 @@
     - fail:
         msg: |
           タグの指定が必要です。
-           -t osx
-           -t ssh
-           -t git
-           -t bash
-           -t proxy
+           -t config
+           ---------
+             -t osx
+             -t ssh
+             -t git
+             -t bash
+             -t proxy
+           ---------
            -t pyenv
            -t brew
-           ---------
-           -t npm
+           -t node
            -t vscode
            -t mas
 
@@ -54,28 +56,28 @@
         name: osx_defaults
       tags:
         - osx
-        - full
+        - config
 
     # ~/.ssh/config
     - import_role:
         name: ssh
       tags:
         - ssh
-        - full
+        - config
 
     # ~/.gitconfig
     - import_role:
         name: git
       tags:
         - git
-        - full
+        - config
 
     # ~/.bashrc ~/.bash_profile
     - import_role:
         name: bash
       tags:
         - bash
-        - full
+        - config
 
     # ~/.proxyrc
     - import_role:
@@ -84,21 +86,26 @@
         - USE_PROXY
       tags:
         - proxy
-        - full
+        - config
 
     # brew
     - import_role:
         name: brew
       tags:
         - brew
-        - full
+        - config
 
     # pyenv
     - import_role:
         name: pyenv
       tags:
         - pyenv
-        - full
+
+    # node
+    - import_role:
+        name: node
+      tags:
+        - node
 
     # mas
     - import_role:
@@ -112,8 +119,3 @@
       tags:
         - vscode
 
-    # node
-    - import_role:
-        name: node
-      tags:
-        - node
