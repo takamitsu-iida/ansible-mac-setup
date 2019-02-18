@@ -40,7 +40,7 @@
 - name: Set current nodejs version
   shell: nodebrew use "{{ NODEBREW_NODE_VERSION }}"
   when:
-    - (nodejs_installed_check|failed) or (nodejs_version_check|failed)
+    - (nodejs_installed_check is failed) or (nodejs_version_check is failed)
 
 - name: Update npm
   shell: npm update -g npm

@@ -2,14 +2,23 @@
 
 - assert:
     that:
+      - VSCODE_SETTINGS_PATH is defined
+      - VSCODE_SETTINGS_DEST is defined
       - VSCODE_EXTENSIONS is defined
     msg: required variables are not defined.
 
+
+- name: Copy current vscode settings.json to role_path
+  delegate_to: localhost
+  copy:
+    # src: /Users/iida/Library/Application Support/Code/User/settings.json
+    src: "{{ VSCODE_SETTINGS_PATH }}"
+    dest: "{{ role_path }}/files/"
+
 - name: Copy vscode settings.json
   copy:
-    # src: "{{ role_path }}/files/settings.json"
-    src: /Users/iida/Library/Application Support/Code/User/settings.json
-    dest: "~/Library/Application Support/Code/User/"
+    src: "{{ role_path }}/files/settings.json"
+    dest: "{{ VSCODE_SETTINGS_DEST }}"
     mode: 0644
 
 - name: Install extensions

@@ -196,7 +196,7 @@ OSX_DEFAULTS_LIST:
 
   - domain: com.apple.dock
     key: tilesize
-    type: int
+    type: float
     value: 83
 
   # finder
@@ -277,6 +277,12 @@ BREW_PACKAGES:
 #
 # roles/vscode
 #
+
+# このマシンの自分のsettings.jsonをそのままコピーする
+VSCODE_SETTINGS_PATH: /Users/iida/Library/Application Support/Code/User/settings.json
+
+# コピー先
+VSCODE_SETTINGS_DEST: "{{ ansible_user_dir + '/Library/Application Support/Code/User/' }}"
 
 VSCODE_EXTENSIONS:
 

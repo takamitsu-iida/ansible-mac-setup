@@ -110,7 +110,7 @@
     // YAML
     "[yaml]": {
         "editor.tabSize": 2,
-        "editor.detectIndentation": true
+        "editor.detectIndentation": false
     },
 
     // vue
