@@ -60,11 +60,22 @@ BASHRC: |
 # プロキシを使うかどうか
 USE_PROXY: false
 
+# ~/.proxyrc
 PROXYRC_FILE: "{{ ansible_user_dir + '/.proxyrc' }}"
 
+# ~/.noproxyrc
+NO_PROXYRC_FILE: "{{ ansible_user_dir + '/.noproxyrc' }}"
+
 # ~/.proxyrcのテンプレート
-# 中身を確認するには./vars/vault.ymlを解凍すること
+# VAULT_PROXYRCは./vars/vault.ymlで定義してあるので、ansible-vaultを使って復号化
 PROXYRC: "{{ VAULT_PROXYRC }}"
+
+NO_PROXYRC: |
+  unset http_proxy
+  unset https_proxy
+  unset no_proxy
+  unset HTTP_PROXY
+  unset HTTPS_PROXY
 
 
 #
