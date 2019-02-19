@@ -276,6 +276,7 @@ BREW_PACKAGES:
   - tnftp
   - tree
   - openssl
+  - python3  # システムにもpython3を入れておかないと何かと不便
   # sshpassは直接導入できないのでインストールスクリプトを指定する
   - https://git.io/sshpass.rb
   - readline
