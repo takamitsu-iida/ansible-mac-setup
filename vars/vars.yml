@@ -83,7 +83,9 @@ NO_PROXYRC: |
 #
 
 # pyenvで使用するバージョン
-PYENV_VERSION: 3.6.5
+# PYENV_VERSION: 2.6.4
+# PYENV_VERSION: 3.6.5
+PYENV_VERSION: anaconda3-5.3.1
 
 # pyenvディレクトリの位置
 # gitでクローンする先として指定する
@@ -112,6 +114,7 @@ PIP_MODULES:
   - tqdm
   - xlrd
   - yapf
+  - ntfy
 
 
 #
@@ -182,6 +185,8 @@ NODEBREW_NPM_UPDATE: true
 NPM_PACKAGES:
   - '@vue/cli'
   - http-server
+  - npm i -g eslint
+  - npm i -g eslint-config-google
 
 
 #
