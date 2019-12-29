@@ -114,8 +114,8 @@ PIP_MODULES:
   - tqdm
   - xlrd
   - yapf
-  - ntfy
-
+  - pandas
+  - numpy
 
 #
 # roles/ssh
@@ -268,6 +268,7 @@ BREW_CASK_APPS:
   - visual-studio-code
   # - virtualbox
   # - vagrant
+  - font-ricty-diminished
 
 BREW_PACKAGES:
   - autoconf
