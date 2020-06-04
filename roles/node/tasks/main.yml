@@ -19,36 +19,46 @@
     - "{{ NODEBREW_SRC_DIR }}"
 
 - name: Check if nodejs is installed
-  shell: which node
+  shell: "{{ ansible_user_shell }} -l -c 'which node'"
   ignore_errors: True
   changed_when: False
   register: nodejs_installed_check
 
 
 - name: Check installed nodejs version
-  shell: nodebrew ls | grep "{{ NODEBREW_NODE_VERSION }}"
+  # shell: nodebrew ls | grep "{{ NODEBREW_NODE_VERSION }}"
+  shell: "{{ ansible_user_shell }} -l -c 'nodebrew ls | grep {{ NODEBREW_NODE_VERSION }}'"
   ignore_errors: true
   changed_when: false
   when: nodejs_installed_check is success
   register: nodejs_version_check
 
 - name: Install nodejs "{{ NODEBREW_NODE_VERSION }}"
-  shell: nodebrew install-binary "{{ NODEBREW_NODE_VERSION }}"
+  # shell: nodebrew install-binary "{{ NODEBREW_NODE_VERSION }}"
+  shell: "{{ ansible_user_shell }} -l -c 'nodebrew install-binary {{ NODEBREW_NODE_VERSION }}'"
   when:
     - (nodejs_installed_check is failed) or (nodejs_version_check is failed)
 
 - name: Set current nodejs version
-  shell: nodebrew use "{{ NODEBREW_NODE_VERSION }}"
+  # shell: nodebrew use "{{ NODEBREW_NODE_VERSION }}"
+  shell: "{{ ansible_user_shell }} -l -c 'nodebrew use {{ NODEBREW_NODE_VERSION }}'"
   when:
     - (nodejs_installed_check is failed) or (nodejs_version_check is failed)
 
 - name: Update npm
-  shell: npm update -g npm
+  # shell: npm update -g npm
+  shell: "{{ ansible_user_shell }} -l -c 'npm update -g npm'"
   when: NODEBREW_NPM_UPDATE
 
 - name: Install npm packages
   npm:
     name: "{{ item }}"
     global: true
+    #
+    # executable does not work fine, use environemnt instead
+    # executable: "{{ ansible_user_dir }}/.nodebrew/current/bin/npm"
+  environment:
+    PATH: "{{ ansible_user_dir }}/.nodebrew/current/bin:{{ ansible_env.PATH }}"
+  become: false
   with_items:
     - "{{ NPM_PACKAGES }}"

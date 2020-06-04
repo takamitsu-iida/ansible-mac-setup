@@ -54,22 +54,16 @@
             "es6": true,
             "browser": true
         },
-        "extends": "eslint:recommended"
+        "extends": ["eslint:recommended", "google"]
     },
-    "eslint.validate": [
-        "javascript",
-        {
-          "language": "vue",
-          "autoFix": true
-        }
-    ],
 
     // css
     "css.lint.unknownProperties": "ignore",
 
     // python
     "[python]": {
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "ms-python.python"
     },
     "python.pythonPath": "${env:PYENV_ROOT}/shims/python",
     "python.linting.pylintEnabled": true,
@@ -115,6 +109,17 @@
 
     // vue
     "[vue]": {
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "team.showWelcomeMessage": false,
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+
+  },
 }

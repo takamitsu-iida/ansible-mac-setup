@@ -6,6 +6,10 @@
       - BASHRC_FILE is defined
       - BASH_PROFILE is defined
       - BASH_PROFILE_FILE is defined
+      - ZSHRC is defined
+      - ZSHRC_FILE is defined
+      - ZPROFILE is defined
+      - ZPROFILE_FILE is defined
       - PYENVRC is defined
       - PYENV_DIR is defined
       - PYENV_VERSION is defined
@@ -21,6 +25,17 @@
     dest: "{{ BASH_PROFILE_FILE }}"
     content: "{{ BASH_PROFILE }}"
 
+- name: Copy .zshrc
+  copy:
+    dest: "{{ ZSHRC_FILE }}"
+    content: "{{ ZSHRC }}"
+
+- name: Copy .zprofile
+  copy:
+    dest: "{{ ZPROFILE_FILE }}"
+    content: "{{ ZPROFILE }}"
+
+
 - name: Check if pyenv is installed
   stat:
     path: "{{ PYENV_DIR }}"
@@ -29,10 +44,10 @@
 
 - block:
 
-    - name: Ensure pyenv setting in ~/.bashrc
+    - name: Ensure pyenv setting in ~/.zshrc
       blockinfile:
         insertafter: '# --PYENV--'
-        path: "{{ BASHRC_FILE }}"
+        path: "{{ ZSHRC_FILE }}"
         content: "{{ PYENVRC }}"
 
     - name: Check if python is installed under pyenv
@@ -41,10 +56,10 @@
       register: version_check
       ignore_errors: true
 
-    - name: Ensure pyenv version setting in ~/.bashrc
+    - name: Ensure pyenv version setting in ~/.zshrc
       lineinfile:
         insertafter: '# --PYENV_VERSION--'
-        path: "{{ BASHRC_FILE }}"
+        path: "{{ ZSHRC_FILE }}"
         regexp: '^pyenv global'
         line: "{{ 'pyenv global ' + PYENV_VERSION }}"
       when:
@@ -53,7 +68,7 @@
     - name: Use system python
       lineinfile:
         insertafter: '# --PYENV_VERSION--'
-        path: "{{ BASHRC_FILE }}"
+        path: "{{ ZSHRC_FILE }}"
         regexp: '^pyenv global'
         line: pyenv global system
       when:

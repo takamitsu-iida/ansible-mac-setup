@@ -1,4 +1,4 @@
 ---
 
-- name: source bashrc
-  shell: bash -lc "source ~/.bashrc"
+- name: source zshrc
+  shell: zsh -lc "source ~/.zshrc"

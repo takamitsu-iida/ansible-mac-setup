@@ -15,20 +15,45 @@
 
 ## Xcodeの使用許諾
 
-Xcodeは最初から入ってるのかな？
+XcodeをAppleStoreからダウンロードしてインストールする。
+一度起動して、使用許諾に同意しておく。
 
-一度起動して、使用許諾に同意しておかないといけない。
+## command line tools for xcode
 
-## Xcodeのヘッダファイルのインストール
+Xcodeを起動してコマンドラインツールをインストールする。
+
+```bash
+Xcode->Open Developer Tool->More Developer Tools
+```
+
+ブラウザで使用許諾に同意してダウンロードしてインストールする。
+
+## Xcodeのヘッダファイルのインストール(10.14のみ？)
 
 Xcode10からは標準の場所にしかヘッダファイルを置いてくれないので、手動でヘッダファイルをインストールする。
 これは一度だけやればよいので、先に済ませておく。
+パスはバージョンによって変更すること。
 
 ```bash
 sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
 ```
 
-## macの設定の読み出し
+## Homebrewのインストール
+
+homebrewをansibleでインストールするのは大変なので、手動でインストールする。
+homebrewはインタラクティブにインストールするのが基本なので、無人インストールは困難。
+
+公式サイトにある通り、コマンドをコピペしてインストールする。
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+```
+
+## Google日本語入力
+
+brew caskでもインストールできるようだが、Google日本語入力も手動でインストールした方がよい。
+
+## コピー元macの設定の読み出し
 
 ```bash
 defaults read > /var/tmp/defaults.txt

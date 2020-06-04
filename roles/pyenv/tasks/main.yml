@@ -2,7 +2,7 @@
 
 - assert:
     that:
-      - BASHRC_FILE is defined
+      - ZSHRC_FILE is defined
       - PYENVRC is defined
       - PYENV_DIR is defined
       - PYENV_VERSION is defined
@@ -22,12 +22,12 @@
         dest: "{{ PYENV_DIR }}"
         accept_hostkey: true
 
-    - name: Ensure pyenv setting in ~/.bashrc
+    - name: Ensure pyenv setting in ~/.zshrc
       blockinfile:
         insertafter: '# --PYENV--'
-        path: "{{ BASHRC_FILE }}"
+        path: "{{ ZSHRC_FILE }}"
         content: "{{ PYENVRC }}"
-      notify: source bashrc
+      notify: source zshrc
 
   when:
     - not pyenv_directory.stat.exists
@@ -48,18 +48,18 @@
     #   become: true
 
     - name: Install python "{{ PYENV_VERSION }}"
-      shell: 'bash -lc "pyenv install {{ PYENV_VERSION }}"'
+      shell: 'zsh -lc "pyenv install {{ PYENV_VERSION }}"'
 
     - name: Switch python version to "{{ PYENV_VERSION }}"
-      shell: 'bash -lc "pyenv global {{ PYENV_VERSION }}"'
+      shell: 'zsh -lc "pyenv global {{ PYENV_VERSION }}"'
 
-    - name: Ensure pyenv version setting in ~/.bashrc
+    - name: Ensure pyenv version setting in ~/.zshrc
       lineinfile:
         insertafter: '# --PYENV_VERSION--'
-        path: "{{ BASHRC_FILE }}"
+        path: "{{ ZSHRC_FILE }}"
         regexp: '^pyenv global'
         line: "{{ 'pyenv global ' + PYENV_VERSION }}"
-      notify: source bashrc
+      notify: source zshrc
 
   when:
     - not version_directory.stat.exists

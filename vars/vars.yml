@@ -1,12 +1,12 @@
 ---
 
 # TARGET_HOSTS: mac
-TARGET_HOSTS: localhost
+TARGET_HOSTS: iidamac2
 
 # ~/.bash_profileへのフルパス
 BASH_PROFILE_FILE: "{{ ansible_user_dir + '/.bash_profile' }}"
 
-# ~/.bash_profileへのフルパス
+# ~/.bash_profile
 BASH_PROFILE: |
   # bash_completion
   [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
@@ -19,7 +19,7 @@ BASH_PROFILE: |
 # ~/.bashrcへのフルパス
 BASHRC_FILE: "{{ ansible_user_dir + '/.bashrc' }}"
 
-# ~/.bashrcのテンプレート
+# ~/.bashrc
 BASHRC: |
   # alias
   alias ls='ls -F'
@@ -53,6 +53,77 @@ BASHRC: |
   # --PYENV_VERSION--
 
 
+# ~/.zshrcへのフルパス
+ZSHRC_FILE: "{{ ansible_user_dir + '/.zshrc' }}"
+
+# ~/.zshrc
+ZSHRC: |
+  # alias
+  alias ls='ls -F'
+
+  # zsh-completion
+  if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+    autoload -Uz compinit
+    compinit
+  fi
+
+  # You may also need to force rebuild `zcompdump`:
+  # rm -f ~/.zcompdump; compinit
+
+  # $HOME/binを最後に通す
+  export PATH=$PATH:$HOME/bin
+
+  # bot開発用に一時利用
+  export bot_name='bot_1'
+  export bot_webhook='iida-ubuntu.japaneast.cloudapp.azure.com'
+  export to_person_email='takamitsu.iida@gmail.com'
+  export bot_redis_url='redis://localhost:6399'
+
+  # ansible
+  export ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q bastion@10.35.158.20"'
+
+  # proxy
+  # . ~/.proxyrc
+
+  # --PROXY--
+
+  # # pyenv
+  # export PYENV_ROOT=$HOME/.pyenv
+  # export PATH=$PYENV_ROOT/bin:$PATH
+  # export PYTHON_CONFIGURE_OPTS="--enable-framework"
+  # eval "$(pyenv init -)"
+
+  # pyenv versionsでインストールされているバージョンを確認して指定する
+  # pyenv global system
+  # pyenv global 3.6.4
+
+  # --PYENV--
+  # BEGIN ANSIBLE MANAGED BLOCK
+  export PYENV_ROOT=$HOME/.pyenv
+  export PATH=$PATH:$PYENV_ROOT/bin
+  export PYTHON_CONFIGURE_OPTS="--enable-framework"
+  eval "$(pyenv init -)"
+  # END ANSIBLE MANAGED BLOCK
+
+  # --PYENV_VERSION--
+
+  # nodebrew
+  export PATH=./node_modules/.bin:$HOME/.nodebrew/current/bin:$PATH
+
+
+# ~/.zprofileへのフルパス
+ZPROFILE_FILE: "{{ ansible_user_dir + '/.zprofile' }}"
+
+# ~/.zprofile
+ZPROFILE: |
+  # include .zshrc if it exists
+  if [ -f "$HOME/.zshrc" ]; then
+    . "$HOME/.zshrc"
+  fi
+
+
 #
 # roles/proxy
 #
@@ -77,15 +148,14 @@ NO_PROXYRC: |
   unset HTTP_PROXY
   unset HTTPS_PROXY
 
-
 #
 # roles/pyenv
 #
 
 # pyenvで使用するバージョン
 # PYENV_VERSION: 2.6.4
-# PYENV_VERSION: 3.6.5
-PYENV_VERSION: anaconda3-5.3.1
+PYENV_VERSION: 3.6.5
+# PYENV_VERSION: anaconda3-5.3.1
 
 # pyenvディレクトリの位置
 # gitでクローンする先として指定する
@@ -183,10 +253,10 @@ NODEBREW_NPM_UPDATE: true
 
 # npm ls -g --depth=0
 NPM_PACKAGES:
-  - '@vue/cli'
+  # - '@vue/cli'
   - http-server
-  - npm i -g eslint
-  - npm i -g eslint-config-google
+  - eslint
+  - eslint-config-google
 
 
 #
@@ -258,24 +328,28 @@ OSX_DEFAULTS_LIST:
 
 BREW_TAPS:
   - homebrew/core
-  - caskroom/cask
+  - homebrew/cask-fonts
 
 BREW_CASK_APPS:
   # - docker
-  - google-chrome
-  - google-japanese-ime
-  - ip-in-menu-bar
-  - visual-studio-code
   # - virtualbox
   # - vagrant
+  - google-chrome
+  - google-backup-and-sync
+  - ip-in-menu-bar
+  - visual-studio-code
   - font-ricty-diminished
+  - webex-teams
 
 BREW_PACKAGES:
   - autoconf
+  - automake
   - bash-completion
+  - zsh-completions
   - cdrtools
   - git
   - jq
+  - libtool
   - mas  # mas-cli
   - nodebrew
   - telnet
@@ -288,7 +362,6 @@ BREW_PACKAGES:
   - readline
   - tree
   - wget
-
 
 #
 # roles/vscode
@@ -318,6 +391,10 @@ VSCODE_EXTENSIONS:
   - esbenp.prettier-vscode
   # excel
   - GrapeCity.gc-excelviewer
+  # YANG
+  - marko2276.yang
+  # azure
+  - ms-azuretools.vscode-docker
   # vscode固有
   - satokaz.vscode-bs-ctrlchar-remover
   - MS-CEINTL.vscode-language-pack-ja

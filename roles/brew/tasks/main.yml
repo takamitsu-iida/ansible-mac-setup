@@ -13,17 +13,24 @@
     path: /usr/local/bin/brew
   register: r
 
--
-  block:
+- assert:
+    that:
+      - r.stat.exists
+    msg: brew is not installed.
 
-    - name: Get brew installer
-      get_url: url=https://raw.githubusercontent.com/Homebrew/install/master/install dest=/tmp/brew_install
 
-    - name: Install homebrew
-      command: ruby /tmp/brew_install
-
-  when:
-    - not r.stat.exists
+# -
+#   block:
+#
+#     - name: Get brew installer
+#       get_url: url=https://raw.githubusercontent.com/Homebrew/install/master/install.sh dest=/tmp/brew_install.sh
+#
+#     - name: Install homebrew
+#       command: yes \'\' | /bin/bash /tmp/brew_install.sh
+#       become: true
+#
+#   when:
+#     - not r.stat.exists
 
 
 - name: Update homebrew
