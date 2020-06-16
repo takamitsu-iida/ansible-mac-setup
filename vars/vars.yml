@@ -340,6 +340,7 @@ BREW_CASK_APPS:
   - visual-studio-code
   - font-ricty-diminished
   - webex-teams
+  - emacs
 
 BREW_PACKAGES:
   - autoconf

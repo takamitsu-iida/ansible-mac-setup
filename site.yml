@@ -32,6 +32,7 @@
              -t git
              -t bash
              -t proxy
+             -t emacs
            ---------
            -t pyenv
            -t brew
@@ -95,6 +96,13 @@
         - brew
         - config
 
+    # emacs
+    - import_role:
+        name: emacs
+      tags:
+        - emacs
+        - config
+
     # pyenv
     - import_role:
         name: pyenv
@@ -118,4 +126,3 @@
         name: vscode
       tags:
         - vscode
-
