@@ -381,6 +381,7 @@ VSCODE_EXTENSIONS:
   - dbaeumer.vscode-eslint
   - octref.vetur
   # Python
+  # pylanceに置き換え？
   - ms-python.python
   - njpwerner.autodocstring
   # Ansible
